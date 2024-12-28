@@ -1,0 +1,90 @@
+name: build-release
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-dotnet:
+    needs: [create-release]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: needs.create-release.outputs.new_release_published == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+      # build and pack
+      - run: dotnet build -c Release -p:Version=${{ needs.create-release.outputs.new_release_version }}
+      - run: dotnet test -c Release --no-build
+      - run: dotnet pack ./src/LocalPortFiltering.AspNetCore/LocalPortFiltering.AspNetCore.csproj -c Release --no-build -p:Version=${{ needs.create-release.outputs.new_release_version }} -o ./publish
+      # Store artifacts.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nuget
+          path: ./publish/
+          retention-days: 1
+
+  nuget-push-dotnet:
+    needs: [build-dotnet]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: needs.create-release.outputs.new_release_published == 'true'
+    env:
+      NUGET_PATH: |
+        ./*.nupkg
+        ./*.snupkg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+
+      # Download(All) Artifacts to current directory
+      - uses: actions/download-artifact@v4
+        with:
+          name: nuget
+      - name: Show download aritifacts
+        run: ls -lR
+      - name: Validate package exists in artifact - NuGet
+        run: |
+          while read -r nuget_path; do
+            if [[ "${nuget_path}" == "" ]]; then continue; fi
+            # shellcheck disable=SC2086
+            if ! ls -l ${nuget_path}; then
+              echo "Specified nuget package not found. path: $nuget_path"
+              if [[ "${nuget_path}" == *.nupkg ]]; then
+                echo ".nupkg must be included in the artifact."
+                exit 1
+              fi
+            fi
+          done <<< "${NUGET_PATH}"
+
+      # Upload to NuGet
+      - name: Upload to NuGet
+        run: |
+          while read -r nuget_path; do
+            if [[ "$nuget_path" == "" ]]; then continue; fi
+            # shellcheck disable=SC2086
+            if ! ls -l ${nuget_path} >/dev/null 2>&1;then
+              echo "skipping nuget push, $nuget_path not found."
+              continue
+            fi
+
+            dotnet nuget push "${nuget_path}" --skip-duplicate -s https://api.nuget.org/v3/index.json -k "${NUGET_KEY}"
+          done <<< "${NUGET_PATH}"
+        env:
+          NUGET_KEY: ${{ secrets.PS_NUGET_KEY }}

@@ -4,6 +4,23 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>LocalPortFiltering.AspNetCore</RootNamespace>
+
+    <!-- NuGet Packaging -->
+    <Id>LocalPortFiltering.AspNetCore</Id>
+    <PackageVersion>$(Version)</PackageVersion>
+    <Company>Willy</Company>
+    <Authors>Willy</Authors>
+    <Copyright>© Willy Wang.</Copyright>
+    <PackageTags>filter;localport;port</PackageTags>
+    <Description>Provides local port filtering middleware and extension methods for ASP.NET Core applications. Enables control over which local ports are allowed to handle requests, enhancing security and controlling access.</Description>
+    <PackageProjectUrl>https://github.com/willysoft/LocalPortFiltering.AspNetCore</PackageProjectUrl>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>opensource.snk</AssemblyOriginatorKeyFile>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
