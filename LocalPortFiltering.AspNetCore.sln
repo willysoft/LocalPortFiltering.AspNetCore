@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalPortFiltering.AspNetCore", "src\LocalPortFiltering.AspNetCore\LocalPortFiltering.AspNetCore.csproj", "{909523F9-32DD-45CF-8D3F-0E6A16736841}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Item", "Solution Item", "{EECA3354-853F-4347-9FF7-E02E431C60AE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1A537C49-75B3-4A25-B135-AAB8B8772CEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F2D05E8F-939B-43F5-A7E9-CF3ADF3601D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalPortFiltering.AspNetCore.Tests", "test\LocalPortFiltering.AspNetCore.Tests\LocalPortFiltering.AspNetCore.Tests.csproj", "{32DC272F-F918-4FDD-BC35-80E88E26805C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{403FA193-6649-4C3D-9CD2-CC82C8413C4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalPortFilteringDemo", "sample\LocalPortFilteringDemo\LocalPortFilteringDemo.csproj", "{C9BDCA80-0471-4B70-AF42-E3BE2A048598}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{909523F9-32DD-45CF-8D3F-0E6A16736841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{909523F9-32DD-45CF-8D3F-0E6A16736841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{909523F9-32DD-45CF-8D3F-0E6A16736841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{909523F9-32DD-45CF-8D3F-0E6A16736841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32DC272F-F918-4FDD-BC35-80E88E26805C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32DC272F-F918-4FDD-BC35-80E88E26805C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32DC272F-F918-4FDD-BC35-80E88E26805C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32DC272F-F918-4FDD-BC35-80E88E26805C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9BDCA80-0471-4B70-AF42-E3BE2A048598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9BDCA80-0471-4B70-AF42-E3BE2A048598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9BDCA80-0471-4B70-AF42-E3BE2A048598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9BDCA80-0471-4B70-AF42-E3BE2A048598}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{909523F9-32DD-45CF-8D3F-0E6A16736841} = {1A537C49-75B3-4A25-B135-AAB8B8772CEF}
+		{32DC272F-F918-4FDD-BC35-80E88E26805C} = {F2D05E8F-939B-43F5-A7E9-CF3ADF3601D0}
+		{C9BDCA80-0471-4B70-AF42-E3BE2A048598} = {403FA193-6649-4C3D-9CD2-CC82C8413C4B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BFFD0D6-0BE5-4FDD-87CD-45AFB3C66A1B}
+	EndGlobalSection
+EndGlobal
