@@ -23,30 +23,20 @@ Here's an example of how to use `LocalPortFiltering` in an ASP.NET Core applicat
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
 
-// Register services
-builder.Services.AddLogging();
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddHealthChecks();
-builder.Services.AddLocalPortFiltering(options =>
-{
-    options.IncludeFailureMessage = true; // Enable failure message
-});
+// Add LocalPortFiltering service
+builder.Services.AddLocalPortFiltering();
 
 var app = builder.Build();
 
-// Configure middleware
-app.UseSwagger();
-app.UseSwaggerUI();
-app.UseWhen(context => context.Connection.LocalPort == 5099,
-            appBuilder => appBuilder.UseHttpsRedirection());
-app.UseAuthorization();
+// Use LocalPortFiltering middleware
 app.UseLocalPortFiltering();
 
-// Configure endpoints
-app.MapHealthChecks("/healthz").RequireLocalPortFiltering(allowPort: 5105);
-app.MapControllers();
+// Define a GET endpoint with port filtering
+app.MapGet("/service1", () => "Welcome to Service 1")
+    .RequireLocalPortFiltering(allowPort: 5105);
+
+// Define another GET endpoint without port filtering
+app.MapGet("/service2", () => "Welcome to Service 2");
 
 app.Run();
 ```
