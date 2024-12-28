@@ -11,7 +11,7 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseWhen(context => context.Connection.LocalPort == 5099,
+app.UseWhen(context => context.Connection.LocalPort != 5105,
             appBuilder => appBuilder.UseHttpsRedirection());
 app.UseAuthorization();
 app.UseLocalPortFiltering();

@@ -102,9 +102,8 @@ app.MapHealthChecks("/healthz").RequireLocalPortFiltering(allowPort: 5105);
 You can use additional middleware conditionally based on the local port:
 
 ```csharp
-app.UseWhen(context => context.Connection.LocalPort == 5099,
+app.UseWhen(context => context.Connection.LocalPort != 5105,
             appBuilder => appBuilder.UseHttpsRedirection());
-
 ```
 
 ## Contribution
