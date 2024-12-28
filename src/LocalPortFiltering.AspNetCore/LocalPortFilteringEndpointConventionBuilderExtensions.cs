@@ -12,14 +12,14 @@ public static class LocalPortFilteringEndpointConventionBuilderExtensions
     /// </summary>
     /// <typeparam name="TBuilder">The type of the builder.</typeparam>
     /// <param name="builder">The endpoint convention builder instance.</param>
-    /// <param name="allowPort">The allowed port for local port filtering.</param>
+    /// <param name="allowPorts">The allowed ports for local port filtering.</param>
     /// <returns>The updated endpoint convention builder.</returns>
-    public static TBuilder RequireLocalPortFiltering<TBuilder>(this TBuilder builder, int allowPort)
+    public static TBuilder RequireLocalPortFiltering<TBuilder>(this TBuilder builder, params int[] allowPorts)
         where TBuilder : IEndpointConventionBuilder
     {
         ArgumentNullException.ThrowIfNull(builder);
 
-        RequireLocalPortFilteringCore(builder, new LocalPortFilteringAttribute(allowPort));
+        RequireLocalPortFilteringCore(builder, new LocalPortFilteringAttribute(allowPorts));
 
         return builder;
     }

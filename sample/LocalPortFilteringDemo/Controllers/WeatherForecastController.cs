@@ -19,7 +19,7 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    [LocalPortFiltering(allowPort: 7239)]
+    [LocalPortFiltering(allowPorts: 7239)]
     public IEnumerable<WeatherForecast> Get()
     {
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast

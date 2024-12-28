@@ -16,7 +16,7 @@ app.UseWhen(context => context.Connection.LocalPort != 5105,
 app.UseAuthorization();
 app.UseLocalPortFiltering();
 
-app.MapHealthChecks("/healthz").RequireLocalPortFiltering(allowPort: 5105);
+app.MapHealthChecks("/healthz").RequireLocalPortFiltering(allowPorts: 5105);
 app.MapControllers();
 
 app.Run();

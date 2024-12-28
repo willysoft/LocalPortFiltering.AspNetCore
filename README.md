@@ -33,7 +33,7 @@ app.UseLocalPortFiltering();
 
 // Define a GET endpoint with port filtering
 app.MapGet("/service1", () => "Welcome to Service 1")
-    .RequireLocalPortFiltering(allowPort: 5105);
+   .RequireLocalPortFiltering(allowPorts: 5105);
 
 // Define another GET endpoint without port filtering
 app.MapGet("/service2", () => "Welcome to Service 2");
@@ -54,7 +54,7 @@ using Microsoft.AspNetCore.Mvc;
 public class SampleController : ControllerBase
 {
     [HttpGet]
-    [LocalPortFiltering(allowPort: 5105)]
+    [LocalPortFiltering(allowPorts: 5105)]
     public IActionResult Get()
     {
         return Ok("This endpoint is only accessible on port 5105.");
@@ -84,7 +84,7 @@ Use `RequireLocalPortFiltering`
 You can apply port-based filtering to specific endpoints:
 
 ```csharp
-app.MapHealthChecks("/healthz").RequireLocalPortFiltering(allowPort: 5105);
+app.MapHealthChecks("/healthz").RequireLocalPortFiltering(allowPorts: 5105);
 ```
 
 **Combine with Conditional Middleware**

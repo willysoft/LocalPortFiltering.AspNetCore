@@ -6,8 +6,8 @@
 public interface ILocalPortFilteringData
 {
     /// <summary>
-    /// Gets the port number that is allowed through the filter.
+    /// Gets the list of port numbers that are allowed through the filter.
     /// </summary>
-    int AllowPort { get; }
+    IReadOnlyList<int> AllowPorts { get; }
 }
 

@@ -5,14 +5,25 @@
 public class LocalPortFilteringAttribute : Attribute, ILocalPortFilteringData
 {
     /// <inheritdoc />
-    public int AllowPort { get; }
+    public IReadOnlyList<int> AllowPorts { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LocalPortFilteringAttribute"/> class.
     /// </summary>
     /// <param name="allowPort">The port number that is allowed through the filter.</param>
     public LocalPortFilteringAttribute(int allowPort)
+         : this([allowPort])
     {
-        AllowPort = allowPort;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LocalPortFilteringAttribute"/> class.
+    /// </summary>
+    /// <param name="allowPorts">The port numbers that is allowed through the filter.</param>
+    public LocalPortFilteringAttribute(params int[] allowPorts)
+    {
+        ArgumentNullException.ThrowIfNull(allowPorts);
+
+        AllowPorts = allowPorts.ToArray();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 
 namespace LocalPortFiltering.AspNetCore.Tests;
@@ -12,7 +11,7 @@ public class LocalPortFilteringConventionBuilderExtensionsTests
         var testConventionBuilder = new TestEndpointConventionBuilder();
 
         // Act
-        testConventionBuilder.RequireLocalPortFiltering(80);
+        testConventionBuilder.RequireLocalPortFiltering([80, 443]);
 
         // Assert
         var addCorsPolicy = Assert.Single(testConventionBuilder.Conventions);
@@ -23,7 +22,8 @@ public class LocalPortFilteringConventionBuilderExtensionsTests
 
         var metadata = endpoint.Metadata.GetMetadata<ILocalPortFilteringData>();
         Assert.NotNull(metadata);
-        Assert.Equal(80, metadata.AllowPort);
+        Assert.Contains(80, metadata.AllowPorts);
+        Assert.Contains(443, metadata.AllowPorts);
     }
 
     [Fact]
