@@ -1,6 +1,6 @@
 # LocalPortFiltering.AspNetCore
 
-[![GitHub Actions](https://github.com/willysoft/LocalPortFiltering.AspNetCore/workflows/Build-Debug/badge.svg)](https://github.com/willysoft/LocalPortFiltering.AspNetCore/actions)  [![Releases](https://img.shields.io/github/v/release/willysoft/LocalPortFiltering.AspNetCore.svg)](https://github.com/willysoft/LocalPortFiltering.AspNetCore/releases) [![NuGet](https://img.shields.io/nuget/vpre/LocalPortFiltering.AspNetCore.svg)](https://www.nuget.org/packages/LocalPortFiltering.AspNetCore/)
+[![GitHub Actions](https://github.com/willysoft/LocalPortFiltering.AspNetCore/workflows/build-release/badge.svg)](https://github.com/willysoft/LocalPortFiltering.AspNetCore/actions)  [![Releases](https://img.shields.io/github/v/release/willysoft/LocalPortFiltering.AspNetCore.svg)](https://github.com/willysoft/LocalPortFiltering.AspNetCore/releases) [![NuGet](https://img.shields.io/nuget/vpre/LocalPortFiltering.AspNetCore.svg)](https://www.nuget.org/packages/LocalPortFiltering.AspNetCore/)
 
 `LocalPortFiltering.AspNetCore` is a middleware and toolset for ASP.NET Core that enables filtering HTTP requests based on the local port. This package is ideal for scenarios where certain operations must be restricted to specific ports, enhancing application security and traffic control.
 
