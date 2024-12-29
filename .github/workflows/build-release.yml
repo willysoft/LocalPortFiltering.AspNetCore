@@ -6,7 +6,17 @@ on:
       - "main"
 
 jobs:
+  test-dotnet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+      # test
+      - run: dotnet test -c Release
+
   create-release:
+    needs: [test-dotnet]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     outputs:
@@ -21,7 +31,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  build-dotnet:
+  create-nuget-package:
     needs: [create-release]
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -31,7 +41,6 @@ jobs:
       - uses: actions/setup-dotnet@v4
       # build and pack
       - run: dotnet build -c Release -p:Version=${{ needs.create-release.outputs.new_release_version }}
-      - run: dotnet test -c Release --no-build
       - run: dotnet pack ./src/LocalPortFiltering.AspNetCore/LocalPortFiltering.AspNetCore.csproj -c Release --no-build -p:Version=${{ needs.create-release.outputs.new_release_version }} -o ./publish
       # Store artifacts.
       - uses: actions/upload-artifact@v4
@@ -40,8 +49,8 @@ jobs:
           path: ./publish/
           retention-days: 1
 
-  nuget-push-dotnet:
-    needs: [build-dotnet]
+  push-nuget-package:
+    needs: [create-nuget-package]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: needs.create-release.outputs.new_release_published == 'true'
