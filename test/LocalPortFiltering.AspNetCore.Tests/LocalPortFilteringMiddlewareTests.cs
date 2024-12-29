@@ -43,6 +43,7 @@ public class LocalPortFilteringMiddlewareTests
 
     [Theory]
     [InlineData(200, 443, new int[] { 443 })]
+    [InlineData(403, 443, new int[] { })]
     [InlineData(403, 80, new int[] { 443 })]
     [InlineData(200, 3000, new int[] { 3000, 3001 })]
     [InlineData(403, 4000, new int[] { 3000, 3001 })]
