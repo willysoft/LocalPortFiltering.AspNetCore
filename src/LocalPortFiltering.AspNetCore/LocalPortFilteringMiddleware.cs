@@ -51,6 +51,8 @@ public class LocalPortFilteringMiddleware
         if (exceptionHandler == null)
             return m_Next(context);
 
+        if (exceptionHandler.AllowPorts == null || exceptionHandler.AllowPorts.Count == 0)
+            return HostValidationFailed(context);
         if (!exceptionHandler.AllowPorts.Contains(context.Connection.LocalPort))
             return HostValidationFailed(context);
 
