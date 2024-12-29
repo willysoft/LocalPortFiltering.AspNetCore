@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Http;
 
 namespace LocalPortFiltering.AspNetCore.Tests;
-public class LocalPortFilteringConventionBuilderExtensionsTests
+public class LocalPortFilteringEndpointConventionBuilderExtensionsTests
 {
     [Fact]
-    public void RequireLocalPort_AllowPort_MetadataAdded()
+    public void RequireLocalPort_AllowPorts_MetadataAdded()
     {
         // Arrange
         var testConventionBuilder = new TestEndpointConventionBuilder();

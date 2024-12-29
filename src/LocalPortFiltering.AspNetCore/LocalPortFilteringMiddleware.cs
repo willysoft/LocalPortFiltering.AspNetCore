@@ -11,7 +11,7 @@ namespace LocalPortFiltering.AspNetCore;
 public class LocalPortFilteringMiddleware
 {
     // Matches Http.Sys.
-    private static readonly byte[] DefaultResponse = Encoding.ASCII.GetBytes(
+    internal static readonly byte[] DefaultResponse = Encoding.ASCII.GetBytes(
             "{\"message\":\"Access to the requested port is not allowed.\"}"
     );
 
@@ -69,5 +69,4 @@ public class LocalPortFilteringMiddleware
         }
         return Task.CompletedTask;
     }
-
 }
