@@ -1,9 +1,14 @@
 name: build-release
 
 on:
-  push:
-    branches:
-      - "main"
+  workflow_dispatch:
+    inputs:
+      # nuget
+      nuget-push:
+        description: "nuget-push: true = upload nuget package. false = not upload"
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   test-dotnet:
@@ -84,6 +89,7 @@ jobs:
 
       # Upload to NuGet
       - name: Upload to NuGet
+        if: ${{ inputs.nuget-push }}
         run: |
           while read -r nuget_path; do
             if [[ "$nuget_path" == "" ]]; then continue; fi
