@@ -1,5 +1,8 @@
 ﻿namespace LocalPortFiltering.AspNetCore;
 
+/// <summary>
+/// Represents the options for local port filtering configuration in the ASP.NET Core application.
+/// </summary>
 public class LocalPortFilteringOptions
 {
     /// <summary>
