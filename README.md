@@ -41,7 +41,7 @@ app.MapGet("/service2", () => "Welcome to Service 2");
 app.Run();
 ```
 
-## Why Use `LocalPortFiltering.AspNetCore`?
+## Why Use LocalPortFiltering.AspNetCore
 
 While ASP.NET Core provides options like `RequireHost` to filter requests based on the `Host` header, it can be vulnerable to **host header spoofing** attacks. This can allow malicious actors to bypass security measures by falsifying the `Host` header.
 
