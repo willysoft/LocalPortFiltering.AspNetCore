@@ -41,6 +41,19 @@ app.MapGet("/service2", () => "Welcome to Service 2");
 app.Run();
 ```
 
+## Why Use `LocalPortFiltering.AspNetCore`?
+
+While ASP.NET Core provides options like `RequireHost` to filter requests based on the `Host` header, it can be vulnerable to **host header spoofing** attacks. This can allow malicious actors to bypass security measures by falsifying the `Host` header.
+
+`LocalPortFiltering.AspNetCore` enhances security by relying on the actual network connection's **local port** (`ConnectionInfo.LocalPort`) for filtering requests, making it immune to host header spoofing.
+
+### Key Benefits:
+- **Stronger security**: Prevents host header spoofing attacks by filtering based on the actual local port.
+- **Port-based filtering**: Allows you to enforce restrictions on which ports are allowed for specific routes, such as health checks, ensuring that only trusted internal traffic can access sensitive endpoints.
+- **Simple integration**: Easily integrates into your ASP.NET Core application, providing an extra layer of security for your health checks and other internal services.
+
+For scenarios where you want to enforce stricter security and prevent potential attacks based on manipulated headers, `LocalPortFiltering.AspNetCore` is a highly recommended solution.
+
 ## Apply Filtering in Controllers
 
 To restrict access to specific actions or controllers, use the `LocalPortFilteringAttribute`:
