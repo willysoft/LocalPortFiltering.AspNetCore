@@ -71,19 +71,24 @@ public class LocalPortFilteringMiddlewareTests
     }
 
     [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public async Task LocalPortFiltering_Response(bool includeFailureMessage)
+    [InlineData(true, true)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    [InlineData(false, false)]
+    public async Task LocalPortFiltering_Response(bool initialIncludeFailureMessage, bool updatedIncludeFailureMessage)
     {
         // Arrange
+        Action<LocalPortFilteringOptions, string?>? onChangeCallback = null;
         var options = new LocalPortFilteringOptions()
         {
-            IncludeFailureMessage = includeFailureMessage
+            IncludeFailureMessage = initialIncludeFailureMessage
         };
         var optionsMonitor = new Mock<IOptionsMonitor<LocalPortFilteringOptions>>();
         optionsMonitor.Setup(o => o.CurrentValue)
                       .Returns(options)
                       .Verifiable();
+        optionsMonitor.Setup(o => o.OnChange(It.IsAny<Action<LocalPortFilteringOptions, string?>>()))
+                      .Callback<Action<LocalPortFilteringOptions, string?>>(callback => onChangeCallback = callback);
         var middleware = new LocalPortFilteringMiddleware(Mock.Of<RequestDelegate>(), optionsMonitor.Object);
 
         var httpContext = new DefaultHttpContext();
@@ -93,13 +98,17 @@ public class LocalPortFilteringMiddlewareTests
         httpContext.Response.Body = responseBody;
 
         // Act
+        onChangeCallback?.Invoke(new LocalPortFilteringOptions
+        {
+            IncludeFailureMessage = updatedIncludeFailureMessage
+        }, "TestChange");
         await middleware.Invoke(httpContext);
         responseBody.Seek(0, SeekOrigin.Begin);
         var responseContent = responseBody.ToArray();
 
         // Assert
         Assert.Equal(403, httpContext.Response.StatusCode);
-        if (includeFailureMessage)
+        if (updatedIncludeFailureMessage)
         {
             Assert.Equal(LocalPortFilteringMiddleware.DefaultResponse.Length, httpContext.Response.ContentLength);
             Assert.Equal("application/json", httpContext.Response.ContentType);
