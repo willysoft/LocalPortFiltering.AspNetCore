@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
       # build and pack
-      - run: dotnet build -c Release -p:Version=${{ needs.create-release.outputs.new_release_version }}
+      - run: dotnet build -c Release /p:ContinuousIntegrationBuild=true -p:Version=${{ needs.create-release.outputs.new_release_version }}
       - run: dotnet pack ./src/LocalPortFiltering.AspNetCore/LocalPortFiltering.AspNetCore.csproj -c Release --no-build -p:Version=${{ needs.create-release.outputs.new_release_version }} -o ./publish
       # Store artifacts.
       - uses: actions/upload-artifact@v4
